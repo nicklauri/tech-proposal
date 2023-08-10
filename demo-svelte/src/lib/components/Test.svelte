@@ -1,8 +1,8 @@
 <script>
-  let counter = 0
+  let name = "Khoa"
 </script>
 
-<div>
-  {counter}
-  <button on:click={() => counter += 1}>Increase</button>
-</div>
+<input bind:value={name} />
+<br />
+Your name is {name}
+''

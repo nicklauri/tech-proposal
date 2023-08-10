@@ -1,8 +1,7 @@
-import { ShellMessage } from "$lib/consts/shell-message"
-import { _shellInternal } from "$lib/stores/shell"
 import type { JavascriptServiceResultModel, ShellTakePictureAsBytes } from "$lib/types/shell"
+import { ShellMessage } from "$lib/consts/shell-message"
 import { sleepAsync } from "$lib/utils/time"
-import { BaseShellService } from "./base-shell"
+import { BaseShellService } from "$lib/services/base-shell"
 
 const getWebviewObj = () => chrome?.webview
 
@@ -23,10 +22,10 @@ const initShell = () => {
 
   shellPostMessage(ShellMessage.pushJavascript, webViewObj)
 
-  return new Promise(async (resolve) => {
+  return new Promise<LocalDeviceService>(async (resolve) => {
     await sleepAsync(500)
     const deviceService = OnixToolStoreV2?.Shell.JavascriptService.LocalDeviceService ?? null
-    _shellInternal.set(new LocalDeviceService(deviceService))
+    resolve(new LocalDeviceService(deviceService))
   })
 }
 
@@ -38,39 +37,28 @@ export class LocalDeviceService extends BaseShellService<DeviceService> {
   takePictureAsync(): Promise<string> {
     return new Promise<string>((resolve, reject) => {
       this.hybridService?.TakePictureAsync((result: JavascriptServiceResultModel<string>) => {
-        this.handleResult<string>(reject, resolve, result);
-      });
-    });
+        this.handleResult<string>(reject, resolve, result)
+      })
+    })
   }
 
   takePictureAsBytesAsync(): Promise<ShellTakePictureAsBytes> {
     return new Promise<ShellTakePictureAsBytes>((resolve, reject) => {
-      this.hybridService?.TakePictureAsBytesAsync(
-        (result: JavascriptServiceResultModel<ShellTakePictureAsBytes>) => {
-          this.handleResult<ShellTakePictureAsBytes>(reject, resolve, result);
-        }
-      );
-    });
+      this.hybridService?.TakePictureAsBytesAsync((result: JavascriptServiceResultModel<ShellTakePictureAsBytes>) => {
+        this.handleResult<ShellTakePictureAsBytes>(reject, resolve, result)
+      })
+    })
   }
 
   getShellInfoAsync(): Promise<any> {
-    const me = this;
-
-    const promise = new Promise((resolve, reject) => {
+    return new Promise((resolve, reject) => {
       this.hybridService?.GetShellInfoAsync((result: JavascriptServiceResultModel<any>) => {
-        me.handleResult<any>(reject, resolve, result);
-      });
-    });
-
-    return promise;
+        this.handleResult<any>(reject, resolve, result)
+      })
+    })
   }
 
-  initService(): void {
-  }
+  initService(): void {}
 }
 
-export {
-  getWebviewObj,
-  shellPostMessage,
-  initShell,
-}
+export { getWebviewObj, shellPostMessage, initShell }

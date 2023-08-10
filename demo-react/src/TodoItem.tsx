@@ -1,4 +1,4 @@
-import { memo } from "react"
+import { memo, useState } from "react"
 import { TodoItemType } from "./App"
 
 interface TodoItemProps {
@@ -15,3 +15,4 @@ function TodoItem(props: TodoItemProps) {
 }
 
 export const TodoItemMemo = memo(TodoItem)
+

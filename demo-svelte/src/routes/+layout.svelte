@@ -1,17 +1,11 @@
 <script>
   import Urls from "$lib/consts/url"
   import { page } from "$app/stores"
-  import "$assets/global.scss"
-    import { onMount } from "svelte";
+  import "$assets/css/global.scss"
 
   const urls = Object.entries(Urls).map(([_name, url]) => url)
 
-  $: currentPage = urls.find(u => u.path === $page.route.id)
-
-  onMount(() => {
-    console.log(`mounting layout`)
-  })
-
+  $: currentPage = urls.find((u) => u.path === $page.route.id)
 </script>
 
 <div class="layout">
@@ -23,7 +17,7 @@
       {/each}
     </div>
   </div>
-  
+
   {#if currentPage}
     <div class="page-name">
       <span class="title">Current page:</span>
@@ -34,7 +28,7 @@
   {/if}
 
   <div class="content">
-    <slot></slot>
+    <slot />
   </div>
 </div>
 
@@ -45,7 +39,7 @@
     gap: 10px;
     padding: 20px;
   }
-  
+
   .head {
     display: flex;
     align-items: center;
@@ -70,7 +64,7 @@
       width: 80px;
       transition: 0.2s ease all;
       color: hsl(0 0% 10%);
-      
+
       &:hover {
         background-color: rgb(186 230 253);
         color: inherit;
@@ -84,16 +78,18 @@
     }
   }
 
-  .navigation, .page-name .title {
+  .navigation,
+  .page-name .title {
     font-weight: 600;
     width: 100px;
     display: inline-block;
   }
 
-  a.link, a:visited {
+  a.link,
+  a:visited {
     text-decoration: none;
   }
-  
+
   .content {
     margin-top: 30px;
   }

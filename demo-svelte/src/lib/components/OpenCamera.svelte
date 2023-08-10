@@ -1,13 +1,16 @@
 <script lang="ts">
-  import Shell from "$lib/stores/shell";
-  import type { CameraData } from "$lib/types/camera";
+  import CameraIcon from "$lib/icons/CameraIcon.svelte"
+  import Shell from "$lib/stores/shell"
+  import type { CameraData } from "$lib/types/camera"
 
   let savedData: CameraData = { state: "empty" }
 
   const takePictureOnly = async () => {
     const path = await $Shell.takePictureAsync()
 
-    if (!path) { return }
+    if (!path) {
+      return
+    }
 
     savedData = {
       state: "picOnly",
@@ -17,13 +20,15 @@
 
   const takePictureAndDisplay = async () => {
     const data = await $Shell.takePictureAsBytesAsync()
-    
-    if (!data) { return }
+
+    if (!data) {
+      return
+    }
 
     savedData = {
       state: "displayable",
       originalFileName: data.originalFileName,
-      fileContent: 'data:image/jpeg;base64,' + data.fileContent,
+      fileContent: "data:image/jpeg;base64," + data.fileContent,
     }
   }
 
@@ -33,49 +38,19 @@
 <div class="main">
   <div class="buttons group-ctrl">
     <button class="open-cam primary" on:click={takePictureAndDisplay}>
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="1em"
-        height="1em"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        class="lucide lucide-camera"
-        ><path
-          d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"
-        /><circle cx="12" cy="13" r="3" /></svg
-      >
+      <CameraIcon />
       Take a selfie and display!
     </button>
 
     <button class="open-cam" on:click={takePictureOnly}>
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="1em"
-        height="1em"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        class="lucide lucide-camera"
-        ><path
-          d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"
-        /><circle cx="12" cy="13" r="3" /></svg
-      >
+      <CameraIcon />
       Take a selfie and save!
     </button>
   </div>
-  
+
   {#if savedData.state == "picOnly"}
     <div class="result code">
-      <div class="info">
-        File name:
-      </div>
+      <div class="info">File name:</div>
       <span class="code">
         {savedData.path}
       </span>
@@ -93,14 +68,13 @@
       </div>
     </div>
   {:else}
-    <div class="result empty">
-      Let's take a selfie!
-    </div>
+    <div class="result empty">Let's take a selfie!</div>
   {/if}
 </div>
 
 <style lang="scss">
-  .main, .result {
+  .main,
+  .result {
     display: flex;
     flex-direction: column;
   }
