@@ -21,6 +21,7 @@ $ npm i -D vite
 $ npm i -D @sveltejs/adapter-static
 $ npm i -D svelte-preprocess
 $ npm i -D path
+$ npm run dev
 ```
 
   + Svelte:

@@ -5,7 +5,6 @@
 	import flash from '$lib/utils/flash'
   import type { TodoItemType } from '$lib/types/todo'
 
-
 	export let todo: TodoItemType
 
 	let button: HTMLButtonElement
@@ -15,8 +14,7 @@
 	})
 </script>
 
-<!-- the text will flash red whenever
-     the `todo` object changes -->
+<!-- the text will flash red whenever the `todo` object changes -->
 <button bind:this={button} type="button" on:click>
 	{todo.done ? '👍' : ''}
 	{todo.text}

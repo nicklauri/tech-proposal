@@ -25,6 +25,7 @@ declare global {
     GetShellInfoAsync(callback: ShellCallback<any>): void,
     TakePictureAsync(callback: ShellCallback<string>): void,
     TakePictureAsBytesAsync(callback: ShellCallback<ShellTakePictureAsBytes>): void,
+    // HelloAsync(name: string, callback: ShellCallback<string>): void,
   }
 }
 

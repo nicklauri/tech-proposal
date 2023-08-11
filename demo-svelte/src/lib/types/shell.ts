@@ -17,3 +17,5 @@ export class JavascriptServiceResultModel<T> extends Promise<T> {
 }
 
 export type ShellTakePictureAsBytes = { fileContent: string; originalFileName: string }
+
+export type ShellToSvelteCallback = (...args: any[]) => void

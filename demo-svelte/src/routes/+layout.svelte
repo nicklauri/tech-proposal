@@ -1,11 +1,18 @@
-<script>
+<script lang="ts">
   import Urls from "$lib/consts/url"
   import { page } from "$app/stores"
+  import { onMount } from "svelte"
+  import { _initShell } from "$lib/stores/shell"
+  import { invokeShellCallback } from "$lib/services/shell"
   import "$assets/css/global.scss"
 
   const urls = Object.entries(Urls).map(([_name, url]) => url)
 
   $: currentPage = urls.find((u) => u.path === $page.route.id)
+
+  onMount(async () => {
+    await _initShell()
+  })
 </script>
 
 <div class="layout">
