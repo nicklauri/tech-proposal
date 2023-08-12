@@ -1,12 +1,11 @@
 <script lang="ts">
   import CameraIcon from "$lib/icons/CameraIcon.svelte"
-  import Shell from "$lib/stores/shell"
   import type { CameraData } from "$lib/types/camera"
 
   let savedData: CameraData = { state: "empty" }
 
   const takePictureOnly = async () => {
-    const path = await $Shell.takePictureAsync()
+    const path = await Shell.takePictureAsync()
 
     if (!path) {
       return
@@ -19,9 +18,9 @@
   }
 
   const takePictureAndDisplay = async () => {
-    const data = await $Shell.takePictureAsBytesAsync()
+    const data = await Shell.takePictureAsBytesAsync()
 
-    if (!data) {
+    if (!data?.fileContent) {
       return
     }
 

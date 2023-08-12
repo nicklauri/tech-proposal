@@ -15,12 +15,13 @@
   --fav-1st: rgb(2 132 199); /*  sky-600 */
   --fav-2nd: rgb(244 63 94); /*  rose-500 */
   font-family: Inter, sans-serif;
-  font-size: 13px;
 }
 
 body {
-  background-color: hsl(0 0% 99%);
+  // background-color: hsl(0 0% 99%);
   color: hsl(0 0% 10%);
+  @apply bg-slate-50;
+  font-size: 13px;
 }
 
 *,
@@ -32,18 +33,16 @@ body {
   box-sizing: border-box;
 }
 
-
-input[type=text] {
-  all: unset;
-  border: var(--border) !important;
-  padding: 4px 5px !important;
+input[type="text"] {
+  border: var(--border);
+  padding: 4px 5px;
   font-family: Inter, sans-serif !important;
-  font-size: 12px !important;
-  border-radius: 3px !important;
+  font-size: 12px;
+  border-radius: 3px;
 
   &:focus {
-    outline: 2px solid var(--accent) !important;
-    border-color: transparent !important;
+    outline: 2px solid var(--accent);
+    border-color: transparent;
   }
 }
 
@@ -74,7 +73,7 @@ button {
   gap: 5px;
   box-shadow: var(--btn-shadow);
 
-  &>* {
+  & > * {
     display: block;
   }
 
@@ -124,25 +123,25 @@ button {
   width: fit-content;
   overflow: hidden;
 
-  >button {
+  > button {
     box-shadow: none;
   }
 
-  >*:first-child:not(:only-child) {
+  > *:first-child:not(:only-child) {
     border-top-right-radius: 0;
     border-bottom-right-radius: 0;
   }
 
-  >*:last-child:not(:only-child) {
+  > *:last-child:not(:only-child) {
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
   }
 
-  >*:not(:first-child):not(:last-child) {
+  > *:not(:first-child):not(:last-child) {
     border-radius: 0;
   }
 
-  >*:not(:last-child)::after {
+  > *:not(:last-child)::after {
     content: "";
     position: absolute;
     height: 100%;
@@ -152,14 +151,15 @@ button {
   }
 }
 
-input, input[type=text] {
-  all: unset;
-  border: var(--border) !important;
-  padding: 4px 5px !important;
-  border-radius: 3px !important;
+// input,
+// input[type="text"] {
+//   all: unset;
+//   border: var(--border) !important;
+//   padding: 4px 5px !important;
+//   border-radius: 3px !important;
 
-  &:focus {
-    outline: 2px solid var(--accent) !important;
-    border-color: transparent !important;
-  }
-}
+//   &:focus {
+//     outline: 2px solid var(--accent) !important;
+//     border-color: transparent !important;
+//   }
+// }

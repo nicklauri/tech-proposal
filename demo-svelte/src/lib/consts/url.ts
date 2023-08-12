@@ -13,7 +13,11 @@ const Urls = {
   },
   shellInfo: {
     name: "Shell info",
-    path: "/shellinfo",
+    path: "/shell-info",
+  },
+  watchFile: {
+    name: "Watch file",
+    path: "/watch-file",
   },
 } as const
 
