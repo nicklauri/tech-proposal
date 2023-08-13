@@ -21,7 +21,9 @@ const config = {
       },
     },
   },
-
+  corePlugins: {
+    preflight: false,
+  },
   plugins: [require("flowbite/plugin")],
   darkMode: "class",
 }

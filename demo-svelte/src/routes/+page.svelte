@@ -1,14 +1,14 @@
-
 <script lang="ts">
-  let name = "Khoa"
+  import { Input } from "flowbite-svelte"
 
+  let name = "Khoa"
 </script>
 
 <div class="main">
   <div>The hello engine!</div>
-  
-  <input bind:value={name} placeholder="Tell me your name" />
-  
+
+  <Input class="w-[500px]" bind:value={name} placeholder="Tell me your name" />
+
   <div>Hello {name}!</div>
 </div>
 
@@ -17,9 +17,5 @@
     display: flex;
     flex-direction: column;
     gap: 10px;
-  }
-
-  input {
-    width: 200px;
   }
 </style>

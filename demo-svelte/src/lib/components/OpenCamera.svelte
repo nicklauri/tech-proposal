@@ -1,8 +1,13 @@
 <script lang="ts">
   import CameraIcon from "$lib/icons/CameraIcon.svelte"
   import type { CameraData } from "$lib/types/camera"
+  import { Button, ButtonGroup, Radio } from "flowbite-svelte"
+  import LucideIcon from "../icons/LucideIcon.svelte"
+  import Layout from "../../routes/+layout.svelte"
+  import DemoInfo from "./DemoInfo.svelte"
 
   let savedData: CameraData = { state: "empty" }
+  let picMode: Exclude<CameraData["state"], "empty"> = "displayable"
 
   const takePictureOnly = async () => {
     const path = await Shell.takePictureAsync()
@@ -31,20 +36,36 @@
     }
   }
 
+  const takePicture = async () => {
+    switch (picMode) {
+      case "displayable":
+        takePictureAndDisplay()
+        break
+      case "picOnly":
+        takePictureOnly()
+        break
+    }
+  }
+
   $: console.log(`savedImagePath:`, savedData)
 </script>
 
 <div class="main">
-  <div class="buttons group-ctrl">
-    <button class="open-cam primary" on:click={takePictureAndDisplay}>
-      <CameraIcon />
-      Take a selfie and display!
-    </button>
+  <DemoInfo>
+    This demonstration shows the capabilities of communication from <strong>frontend</strong> to <strong>shell</strong>.
+    <br />
+    The frontend (Svelte) calls the <code>takePictureAsync</code> from shell (Webview2) and processes the data.
+  </DemoInfo>
 
-    <button class="open-cam" on:click={takePictureOnly}>
-      <CameraIcon />
-      Take a selfie and save!
-    </button>
+  <div class="flex gap-4">
+    <Button class="flex gap-2 shadow-md py-1" color="primary" on:click={takePicture}>
+      <CameraIcon class="text-[16px]" />
+      Take a picture!
+    </Button>
+
+    <Radio bind:group={picMode} value={"displayable"}>Display picture</Radio>
+
+    <Radio bind:group={picMode} value={"picOnly"}>Save picture</Radio>
   </div>
 
   {#if savedData.state == "picOnly"}
@@ -80,11 +101,6 @@
 
   .main {
     gap: 10px;
-
-    .buttons {
-      display: flex;
-      // gap: 10px;
-    }
   }
 
   .result {

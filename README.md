@@ -26,6 +26,10 @@ $ npm i -D svelte-preprocess
 $ npm i -D path
 $ npx svelte-add@latest tailwindcss
 $ npm i flowbite flowbite-svelte tailwind-merge @floating-ui/dom
+$ npm i lucide-svelte
+$ npm i svelte-virtual-scroll-list -D
+$ npm install date-fns --save
+$ npm install @fluentui/react
 $ npm run dev
 ```
 

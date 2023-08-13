@@ -1,8 +1,8 @@
 <script lang="ts">
   import { twMerge } from "tailwind-merge"
 
+  export let name: string
   let cn: string | undefined = undefined
-
   export { cn as class }
 </script>
 
@@ -10,7 +10,7 @@
   xmlns="http://www.w3.org/2000/svg"
   width="1em"
   height="1em"
-  class={twMerge(cn, "lucide lucide-camera")}
+  class={twMerge(cn, `lucide lucide-${name}`)}
   viewBox="0 0 24 24"
   fill="none"
   stroke="currentColor"

@@ -1,9 +1,9 @@
-import type { JavascriptServiceResultModel, ShellTakePictureAsBytes, ShellToSvelteCallback } from "$lib/types/shell"
+import type { ShellToSvelteCallback } from "$lib/types/shell"
 import { ShellMessage } from "$lib/consts/shell-message"
 import { sleepAsync } from "$lib/utils/time"
-import { BaseShellService } from "$lib/services/base-shell"
 import { shellCallbacks, type SvelteShellCallbackMap } from "$lib/stores/shell"
 import { get } from "svelte/store"
+import { LocalDeviceService } from "./local-device-service"
 
 const getWebviewObj = () => chrome?.webview
 
@@ -11,13 +11,14 @@ const shellPostMessage = (message: string | ShellMessage, webviewObj?: Chrome["w
   webviewObj ??= getWebviewObj()
 
   if (!webviewObj) {
-    // TODO: use warn debug.
     console.warn(`webview is undefined`)
     return
   }
 
   webviewObj.postMessage(message)
 }
+
+const getLocalDeviceService = () => window.OnixToolStoreV2?.Shell.JavascriptService.LocalDeviceService ?? null
 
 const initShell = async (reinit = false) => {
   if (!reinit && Shell) {
@@ -30,8 +31,7 @@ const initShell = async (reinit = false) => {
 
   return new Promise<LocalDeviceService>(async (resolve) => {
     await sleepAsync(500)
-    const deviceService = OnixToolStoreV2?.Shell.JavascriptService.LocalDeviceService ?? null
-    Shell = new LocalDeviceService(deviceService)
+    Shell = new LocalDeviceService(getLocalDeviceService())
     resolve(Shell)
   })
 }
@@ -62,79 +62,9 @@ const unregisterShellCallback = (event: string, callback: ShellToSvelteCallback)
 const invokeShellCallback = (event: string, ...args: any[]) => {
   const shellCbList = get(shellCallbacks).get(event) ?? []
 
+  console.log(`Shell callback: event:`, event, `| data:`, args, `| list`, shellCbList)
+
   shellCbList.forEach((cb) => cb(...args))
-}
-
-export class LocalDeviceService extends BaseShellService<DeviceService> {
-  get service() {
-    if (!this.hybridService) {
-      console.warn("The hybrid service is not initialized!")
-      initShell(true)
-    }
-    return this.hybridService
-  }
-
-  constructor(srv: DeviceService | null) {
-    super(srv)
-  }
-
-  takePictureAsync(): Promise<string> {
-    return new Promise((resolve, reject) => {
-      this.service?.TakePictureAsync((result) => {
-        this.handleResult(reject, resolve, result)
-      })
-    })
-  }
-
-  takePictureAsBytesAsync(): Promise<ShellTakePictureAsBytes> {
-    return new Promise((resolve, reject) => {
-      this.service?.TakePictureAsBytesAsync((result) => {
-        this.handleResult(reject, resolve, result)
-      })
-    })
-  }
-
-  getShellInfoAsync(): Promise<any> {
-    return new Promise((resolve, reject) => {
-      this.service?.GetShellInfoAsync((result: JavascriptServiceResultModel<any>) => {
-        this.handleResult<any>(reject, resolve, result)
-      })
-    })
-  }
-
-  // helloAsync(name: string): Promise<string> {
-  //   return new Promise((resolve, reject) => {
-  //     this.service?.HelloAsync(name, (result: JavascriptServiceResultModel<any>) => {
-  //       this.handleResult<string>(reject, resolve, result)
-  //     })
-  //   })
-  // }
-
-  isWatchFileOnAsync(): Promise<boolean> {
-    return new Promise((resolve, reject) => {
-      this.service?.IsWatchFileOnAsync((result) => {
-        this.handleResult(reject, resolve, result)
-      })
-    })
-  }
-
-  startWatchFileAsync(path: string): Promise<boolean> {
-    return new Promise((resolve, reject) => {
-      this.service?.StartWatchFileAsync(path, (result) => {
-        this.handleResult(reject, resolve, result)
-      })
-    })
-  }
-
-  stopWatchFileAsync(): Promise<boolean> {
-    return new Promise((resolve, reject) => {
-      this.service?.StopWatchFileAsync((result) => {
-        this.handleResult(reject, resolve, result)
-      })
-    })
-  }
-
-  initService(): void {}
 }
 
 export {

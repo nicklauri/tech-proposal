@@ -16,9 +16,17 @@ function createWatchFileStore() {
   const updateFileChanged: ShellToSvelteCallback = (data) => {
     update((current) => ({
       ...current,
+      isCurrentFileDeleted: false,
       isWatching: true,
       file: data.file,
       content: data.content,
+    }))
+  }
+
+  const updateFileDeleted: ShellToSvelteCallback = (data) => {
+    update((current) => ({
+      ...current,
+      isCurrentFileDeleted: true,
     }))
   }
 
@@ -35,13 +43,15 @@ function createWatchFileStore() {
       }))
     },
     async startWatching(file: string) {
-      console.log(`startWatching ${file}`)
       registerShellCallback(ShellEvent.FileChanged, updateFileChanged)
+      registerShellCallback(ShellEvent.FileDeleted, updateFileDeleted)
+
       await Shell.startWatchFileAsync(file)
     },
     async stopWatching() {
       await Shell.stopWatchFileAsync()
       unregisterShellCallback(ShellEvent.FileChanged, updateFileChanged)
+      unregisterShellCallback(ShellEvent.FileDeleted, updateFileDeleted)
 
       update((state) => ({ ...state, isWatching: false }))
     },

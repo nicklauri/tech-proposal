@@ -10,7 +10,7 @@
   xmlns="http://www.w3.org/2000/svg"
   width="1em"
   height="1em"
-  class={twMerge(cn, "lucide lucide-camera")}
+  class={twMerge(cn, "lucide lucide-info")}
   viewBox="0 0 24 24"
   fill="none"
   stroke="currentColor"
@@ -18,6 +18,5 @@
   stroke-linecap="round"
   stroke-linejoin="round"
 >
-  <path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z" />
-  <circle cx="12" cy="13" r="3" />
-</svg>
+  <circle cx="12" cy="12" r="10" /><path d="M12 16v-4" /><path d="M12 8h.01" /></svg
+>

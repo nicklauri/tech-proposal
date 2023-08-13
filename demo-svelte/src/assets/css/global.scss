@@ -15,6 +15,7 @@
   --fav-1st: rgb(2 132 199); /*  sky-600 */
   --fav-2nd: rgb(244 63 94); /*  rose-500 */
   font-family: Inter, sans-serif;
+  font-variant-numeric: tabular-nums;
 }
 
 body {
@@ -33,7 +34,7 @@ body {
   box-sizing: border-box;
 }
 
-input[type="text"] {
+input[type="text"].my {
   border: var(--border);
   padding: 4px 5px;
   font-family: Inter, sans-serif !important;
@@ -52,7 +53,7 @@ button {
   font-family: inherit;
 }
 
-button {
+button.my {
   border: none;
   padding: 0;
   background-color: white;
