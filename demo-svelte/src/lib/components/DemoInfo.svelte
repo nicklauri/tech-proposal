@@ -4,7 +4,7 @@
 </script>
 
 <Alert color="blue" class="text-[12px] py-2">
-  <div class="flex gap-2">
+  <div class="flex gap-4">
     <div class="items-center flex">
       <InfoIcon class="inline-block text-[20px]" />
     </div>

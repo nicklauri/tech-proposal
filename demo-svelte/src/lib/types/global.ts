@@ -1,4 +1,5 @@
 import type { LocalDeviceService } from "$lib/services/shell"
+import type { ApplicationInsights } from "@microsoft/applicationinsights-web"
 import type { JavascriptServiceResultModel, ShellTakePictureAsBytes } from "./shell"
 
 declare global {

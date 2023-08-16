@@ -98,15 +98,15 @@
 
     reactRoot.render(e(ReactList, { items: $virtualScrollList }))
 
-    const interval = setInterval(() => {
-      virtualScrollList.loadMore(100)
-    }, 5000)
+    // const interval = setInterval(() => {
+    //   virtualScrollList.loadMore(100)
+    // }, 5000)
 
     return () => {
-      clearInterval(interval)
+      // clearInterval(interval)
       reactRoot.unmount()
     }
   })
 </script>
 
-<div bind:this={listEl} class="h-[400px] overflow-auto" />
+<div bind:this={listEl} class="h-[400px] overflow-auto mt-3" />

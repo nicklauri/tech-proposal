@@ -1,9 +1,7 @@
 <script lang="ts">
-  import CameraIcon from "$lib/icons/CameraIcon.svelte"
   import type { CameraData } from "$lib/types/camera"
-  import { Button, ButtonGroup, Radio } from "flowbite-svelte"
-  import LucideIcon from "../icons/LucideIcon.svelte"
-  import Layout from "../../routes/+layout.svelte"
+  import CameraIcon from "$lib/icons/CameraIcon.svelte"
+  import { Button, Radio } from "flowbite-svelte"
   import DemoInfo from "./DemoInfo.svelte"
 
   let savedData: CameraData = { state: "empty" }

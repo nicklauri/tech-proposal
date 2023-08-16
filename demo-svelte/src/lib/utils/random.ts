@@ -9,10 +9,12 @@ export function createRandomUser(): UserInfo {
     userId: faker.string.uuid(),
     username: faker.internet.userName(),
     email: faker.internet.email().toLowerCase(),
-    avatar: faker.image.avatar(),
+    avatar: randomFromArray(AvatarList),
     birthdate: format(faker.date.birthdate(), "dd.MM.yyyy"),
   }
 }
+
+export const AvatarList = faker.helpers.multiple(() => faker.image.avatar(), { count: 10 })
 
 export const createRandomUserList = (amount: number): UserInfo[] =>
   faker.helpers.multiple(createRandomUser, {

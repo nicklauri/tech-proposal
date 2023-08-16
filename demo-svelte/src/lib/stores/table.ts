@@ -39,7 +39,7 @@ export const UserColumns: { [k in Cols]: { name: k; title: string; width: string
 }
 
 const createVirtualScrollListStore = () => {
-  const { subscribe, set, update } = writable<UserInfo[]>([])
+  const { subscribe, set, update } = writable<UserInfo[]>(createRandomUserList(1000))
 
   return {
     subscribe,

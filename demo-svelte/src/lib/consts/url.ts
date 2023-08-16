@@ -9,10 +9,10 @@ const Urls = {
     name: "Virtual scroll",
     path: "/virtual-scroll",
   } satisfies Route as Route,
-  // lazyLoading: {
-  //   name: "With lazy loading",
-  //   path: "/lazy-loading",
-  // },
+  // reactList: {
+  //   name: "React list 😳",
+  //   path: "/react-list",
+  // } satisfies Route as Route,
   camera: {
     name: "Camera",
     path: "/camera",

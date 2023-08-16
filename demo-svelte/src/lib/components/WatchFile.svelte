@@ -27,6 +27,8 @@
       return
     }
 
+    filePath = filePath.replaceAll("\"", "")
+
     watchFile.startWatching(filePath).catch((e) => (err = e.message))
   }
 

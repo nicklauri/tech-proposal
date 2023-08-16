@@ -2,14 +2,14 @@
   import type { InfiniteEvent } from "svelte-virtual-infinite-list"
   import VirtualInfiniteList from "svelte-virtual-infinite-list"
   import { onMount } from "svelte"
-  import { virtualScrollList, type UserInfo, UserColumns } from "$lib/stores/table"
+  import { virtualScrollList, UserColumns } from "$lib/stores/table"
   import { sleepAsync } from "$lib/utils/time"
   import { twMerge } from "tailwind-merge"
-  import { Button, Checkbox, Input, Toggle } from "flowbite-svelte"
+  import { Button, Input, Toggle } from "flowbite-svelte"
   import SpinnerIcon from "$lib/icons/SpinnerIcon.svelte"
   import BoxIcon from "$lib/icons/BoxIcon.svelte"
 
-  let loading = true
+  let loading = false
   let start = 0
   let end = 0
   let loadMoreAmount = 100
@@ -43,7 +43,7 @@
     return loadMore()
   }
 
-  async function loadMore() {
+  async function loadMore(noDelay = false) {
     if (!loadMoreAmount || loadMoreAmount <= 0) {
       return
     }
@@ -51,21 +51,18 @@
     loading = true
     const fixedSleep = 2000
     currentLoadMoreItems = loadMoreAmount
-    await sleepAsync(fixedSleep)
+    !noDelay && await sleepAsync(fixedSleep)
     virtualScrollList.loadMore(loadMoreAmount)
 
     loading = false
   }
 
-  onMount(async () => {
-    loading = true
-
-    virtualScrollList.loadMore(100)
-
-    console.log(`loadmore:`, $virtualScrollList.length)
-
-    loading = false
-  })
+  // onMount(async () => {
+    // loading = true
+    // virtualScrollList.loadMore(100)
+    // console.log(`loadmore:`, $virtualScrollList.length)
+    // loading = false
+  // })
 
   const columnNames = Object.values(UserColumns)
 
@@ -85,7 +82,7 @@
     </div>
   </div>
   <div>
-    <Button class="py-1 flex items-center gap-2" on:click={loadMore} disabled={loading}>
+    <Button class="py-1 flex items-center gap-2" on:click={() => loadMore(true)} disabled={loading}>
       {#if loading}
         <SpinnerIcon class="animate-spin text-[20px]" />
       {/if}
@@ -94,7 +91,7 @@
     </Button>
   </div>
   <div class="flex items-center">
-    <Toggle bind:checked={shouldLazyLoad}>Lazy load items</Toggle>
+    <Toggle bind:checked={shouldLazyLoad} size="small" disabled={loading} class={twMerge("text-black", loading && "text-gray-500")}>Lazy load items</Toggle>
   </div>
 </div>
 
@@ -107,7 +104,7 @@
     {/each}
   </div>
 
-  <div class="h-[400px] overflow-auto relative">
+  <div class="h-[345px] overflow-auto relative">
     <VirtualInfiniteList
       items={$virtualScrollList}
       {loading}

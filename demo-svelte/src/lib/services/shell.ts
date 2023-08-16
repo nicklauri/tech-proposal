@@ -73,5 +73,5 @@ export {
   shellPostMessage,
   registerShellCallback,
   unregisterShellCallback,
-  invokeShellCallback,
+  invokeShellCallback, LocalDeviceService,
 }

@@ -16,7 +16,7 @@
   $: currentPage = urls.find((u) => u.path === $page.route.id)
 </script>
 
-<Tabs {style} class={cn}>
+<Tabs {style} class={cn} contentClass="p-4">
   {#each urls as nav}
     <TabItem open={$page.route.id === nav.path} on:click={() => goto(nav.path)} title={nav.name}>
       <slot />
